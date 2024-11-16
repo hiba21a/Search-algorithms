@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from LogicGame import LogicGame
 from levels import get_levels
+from Algorithm import Algorithm
 
 SQUARE_SIZE = 50
 
@@ -9,7 +10,7 @@ class Game:
 
     def __init__(self, root):
         self.root = root
-        self.canvas = tk.Canvas(root, width=5 * SQUARE_SIZE, height=5 * SQUARE_SIZE)
+        self.canvas = tk.Canvas(root, width=10 * SQUARE_SIZE, height=10 * SQUARE_SIZE)
         self.canvas.pack()
         
         self.levels = get_levels()
@@ -21,6 +22,8 @@ class Game:
         self.root.bind("<Down>", self.handle_key_down)
         self.root.bind("<Left>", self.handle_key_left)
         self.root.bind("<Right>", self.handle_key_right)
+        self.root.bind("<n>", self.show_next_states)
+        self.root.bind("<s>", self.solve_with_bfs)
 
     def handle_key_up(self, event):
         self.move_and_check('up')
@@ -76,3 +79,25 @@ class Game:
         messagebox.showinfo("Success", "Level Completed!")
         self.current_level_index += 1
         self.load_level(self.current_level_index)
+
+    def show_next_states(self, event):
+        logic = LogicGame(self.board)
+        
+        next_states = logic.next_state()
+        for movement, state in next_states:
+            print(f"Movement: {movement}")
+            print(state)
+
+    def solve_with_bfs(self, event):
+        logic = LogicGame(self.board)
+        algorithm = Algorithm()
+
+        solution_path = algorithm.bfs(logic, self) 
+
+        if solution_path:
+            for step, state in enumerate(solution_path):
+                print(f"\nStep {step + 1}:")
+                print(state)
+            messagebox.showinfo("Solution Found")
+        else:
+            messagebox.showinfo("No Solution")
