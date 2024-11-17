@@ -24,6 +24,7 @@ class Game:
         self.root.bind("<Right>", self.handle_key_right)
         self.root.bind("<n>", self.show_next_states)
         self.root.bind("<s>", self.solve_with_bfs)
+        self.root.bind("<d>", self.solve_with_dfs)
 
     def handle_key_up(self, event):
         self.move_and_check('up')
@@ -98,6 +99,23 @@ class Game:
             for step, state in enumerate(solution_path):
                 print(f"\nStep {step + 1}:")
                 print(state)
+                print("-----------------------")
             messagebox.showinfo("Solution Found")
         else:
             messagebox.showinfo("No Solution")
+
+    def solve_with_dfs(self, event):
+            logic = LogicGame(self.board)
+            algorithm = Algorithm()
+
+            solution_path = algorithm.dfs(logic, self) 
+
+            if solution_path:
+                for step, state in enumerate(solution_path):
+                    print(f"\nStep {step + 1}:")
+                    print(state)
+                    print("-----------------------")
+
+                messagebox.showinfo("Solution Found")
+            else:
+                messagebox.showinfo("No Solution")
