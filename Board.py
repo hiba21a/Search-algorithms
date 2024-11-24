@@ -57,7 +57,7 @@ class Board:
                     if square.color == "black":
                         row += "# "  
                     elif square.color == "white" and not square.is_goal:
-                        row += "__"  
+                        row += "- "  
                     elif square.move:
                         if square.color == "green":
                             row += "G "  

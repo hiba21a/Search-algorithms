@@ -9,11 +9,11 @@ class Game:
 
     def __init__(self, root):
         self.root = root
-        self.canvas = tk.Canvas(root, width=5 * SQUARE_SIZE, height=5 * SQUARE_SIZE)
+        self.canvas = tk.Canvas(root, width=10 * SQUARE_SIZE, height=10 * SQUARE_SIZE)
         self.canvas.pack()
         
         self.levels = get_levels()
-        self.current_level_index = 0
+        self.current_level_index = 1
         self.board = self.levels[self.current_level_index]
         self.draw_board()
 
