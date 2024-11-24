@@ -36,6 +36,7 @@ class LogicGame:
                     break
             if moved > 0:
                 new_board.update_position(square,original_x,original_y, x, y)
+        print(new_board)        
         return new_board
 
     def move_down(self):
@@ -69,7 +70,7 @@ class LogicGame:
 
             if moved > 0:
                 new_board.update_position(square,original_x,original_y, x, y)
-                
+        print(new_board)         
         return new_board
 
     def move_right(self):
@@ -105,7 +106,9 @@ class LogicGame:
                     break
 
             if moved > 0:
-                new_board.update_position(square,original_x,original_y, x, y)
+        
+              new_board.update_position(square,original_x,original_y, x, y)
+        print(new_board) 
         return new_board
 
 
@@ -142,7 +145,7 @@ class LogicGame:
                     break
             if moved > 0:
                 new_board.update_position(square,original_x,original_y, x, y)
-
+        print(new_board) 
         return new_board
   
     def next_state(self):

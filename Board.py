@@ -58,6 +58,7 @@ class Board:
 
         square.x, square.y = new_x, new_y
         self.net[new_y][new_x] = square
+        
 
 
     def __str__(self):
