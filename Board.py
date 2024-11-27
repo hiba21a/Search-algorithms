@@ -59,6 +59,7 @@ class Board:
         square.x, square.y = new_x, new_y
         self.net[new_y][new_x] = square
         
+<<<<<<< HEAD
     def calculate_cost(self, other_board):
         cost = 0
         for square in self.squares:
@@ -66,6 +67,9 @@ class Board:
             if other_square:
                 cost += abs(square.x - other_square.x) + abs(square.y - other_square.y)
         return cost
+=======
+
+>>>>>>> 360b2a9876bfc1649c2f2cca2bdc7e6951271daf
 
     def __str__(self):
         result = ""

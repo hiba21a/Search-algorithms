@@ -36,7 +36,11 @@ class LogicGame:
                     break
             if moved > 0:
                 new_board.update_position(square,original_x,original_y, x, y)
+<<<<<<< HEAD
         # print(new_board)        
+=======
+        print(new_board)        
+>>>>>>> 360b2a9876bfc1649c2f2cca2bdc7e6951271daf
         return new_board
 
     def move_down(self):
@@ -70,7 +74,11 @@ class LogicGame:
 
             if moved > 0:
                 new_board.update_position(square,original_x,original_y, x, y)
+<<<<<<< HEAD
         # print(new_board)         
+=======
+        print(new_board)         
+>>>>>>> 360b2a9876bfc1649c2f2cca2bdc7e6951271daf
         return new_board
 
     def move_right(self):
@@ -108,7 +116,11 @@ class LogicGame:
             if moved > 0:
         
               new_board.update_position(square,original_x,original_y, x, y)
+<<<<<<< HEAD
         # print(new_board) 
+=======
+        print(new_board) 
+>>>>>>> 360b2a9876bfc1649c2f2cca2bdc7e6951271daf
         return new_board
 
 
@@ -145,7 +157,11 @@ class LogicGame:
                     break
             if moved > 0:
                 new_board.update_position(square,original_x,original_y, x, y)
+<<<<<<< HEAD
         # print(new_board) 
+=======
+        print(new_board) 
+>>>>>>> 360b2a9876bfc1649c2f2cca2bdc7e6951271daf
         return new_board
   
     def next_state(self):

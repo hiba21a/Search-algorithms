@@ -14,7 +14,7 @@ class Game:
         self.canvas.pack()
         
         self.levels = get_levels()
-        self.current_level_index = 0
+        self.current_level_index = 1
         self.board = self.levels[self.current_level_index]
         self.draw_board()
 

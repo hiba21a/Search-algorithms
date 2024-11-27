@@ -144,3 +144,18 @@ class Algorithm:
             path.append(current_logic_game.board) 
             current_logic_game = parent_map.get(str(current_logic_game.board))  
         return path[::-1]  
+    
+    def uniform_cost_search(start_logic_game):
+        priority_queue = heapq.heappush(priority_queue,(0,start_logic_game))
+        visited_list = []  
+        visited_list.append(str(start_logic_game.board))  
+        parent_map = {str(start_logic_game.board): None}  
+
+        while priority_queue :
+            current_cost,current_logic_game= heapq.heappop(priority_queue) 
+            current_board = current_logic_game.board  
+
+            if  Algorithm.check_all_white_except_black(current_board):
+                return Algorithm._path_board(parent_map, current_logic_game)
+
+        
