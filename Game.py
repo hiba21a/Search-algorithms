@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from LogicGame import LogicGame
 from levels import get_levels
+from Algorithm import Algorithm
 
 SQUARE_SIZE = 50
 
@@ -13,7 +14,7 @@ class Game:
         self.canvas.pack()
         
         self.levels = get_levels()
-        self.current_level_index = 1
+        self.current_level_index = 0
         self.board = self.levels[self.current_level_index]
         self.draw_board()
 
@@ -21,6 +22,11 @@ class Game:
         self.root.bind("<Down>", self.handle_key_down)
         self.root.bind("<Left>", self.handle_key_left)
         self.root.bind("<Right>", self.handle_key_right)
+        self.root.bind("<n>", self.show_next_states)
+        self.root.bind("<s>", self.solve_with_bfs)
+        self.root.bind("<d>", self.solve_with_dfs)
+        self.root.bind("<r>", self.solve_with_recursivedfs)
+        self.root.bind("<u>", self.solve_with_ucs)
 
     def handle_key_up(self, event):
         self.move_and_check('up')
@@ -76,3 +82,77 @@ class Game:
         messagebox.showinfo("Success", "Level Completed!")
         self.current_level_index += 1
         self.load_level(self.current_level_index)
+
+    def show_next_states(self, event):
+        logic = LogicGame(self.board)
+        
+        next_states = logic.next_state()
+        for movement, state in next_states:
+            print(f"Movement: {movement}")
+            print(state)
+
+    def solve_with_bfs(self, event):
+        logic = LogicGame(self.board)
+        algorithm = Algorithm()
+
+        solution_path = algorithm.bfs(logic)
+
+        if solution_path:
+            for step, state in enumerate(solution_path):
+                print(f"\nStep {step + 1}:")
+                print(state)
+                print("-----------------------")
+            messagebox.showinfo("Solution Found")
+        else:
+            messagebox.showinfo("No Solution")
+
+    def solve_with_dfs(self, event):
+            logic = LogicGame(self.board)
+            algorithm = Algorithm()
+
+            solution_path = algorithm.dfs(logic) 
+
+            if solution_path:
+                print("dfs")
+                for step, state in enumerate(solution_path):
+                    print(f"\nStep {step + 1}:")
+                    print(state)
+                    print("-----------------------")
+
+                messagebox.showinfo("Solution Found")
+            else:
+                messagebox.showinfo("No Solution")
+
+    def solve_with_recursivedfs(self, event):
+        logic = LogicGame(self.board)
+        algorithm = Algorithm()
+
+        solution_path = algorithm.recursivedfs(logic, set())
+
+        if solution_path:
+            print("recursivedfs")
+            for step, state in enumerate(solution_path):
+                print(f"\nStep {step + 1}:")
+                print(state)
+                print("-----------------------")
+
+            messagebox.showinfo("Solution Found")
+        else:
+            messagebox.showinfo("No Solution")
+
+    def solve_with_ucs(self, event):
+        logic = LogicGame(self.board)  
+        algorithm = Algorithm()  
+
+        solution_path = algorithm.ucs(logic)  
+
+        if solution_path:
+            print("Uniform Cost Search (UCS)")
+            for step, state in enumerate(solution_path):
+                print(f"\nStep {step + 1}:")
+                print(state)
+                print("-----------------------")
+
+            messagebox.showinfo("Solution Found")
+        else:
+            messagebox.showinfo("No Solution")
