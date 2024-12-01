@@ -27,6 +27,7 @@ class Game:
         self.root.bind("<d>", self.solve_with_dfs)
         self.root.bind("<r>", self.solve_with_recursivedfs)
         self.root.bind("<u>", self.solve_with_ucs)
+        self.root.bind("<a>", self.solve_with_a_start)
 
     def handle_key_up(self, event):
         self.move_and_check('up')
@@ -148,6 +149,23 @@ class Game:
 
         if solution_path:
             print("Uniform Cost Search (UCS)")
+            for step, state in enumerate(solution_path):
+                print(f"\nStep {step + 1}:")
+                print(state)
+                print("-----------------------")
+
+            messagebox.showinfo("Solution Found")
+        else:
+            messagebox.showinfo("No Solution")
+
+    def solve_with_a_start(self, event):
+        logic = LogicGame(self.board)  
+        algorithm = Algorithm()  
+
+        solution_path = algorithm.a_star(logic)  
+
+        if solution_path:
+            print("a_star)")
             for step, state in enumerate(solution_path):
                 print(f"\nStep {step + 1}:")
                 print(state)

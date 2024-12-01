@@ -157,12 +157,7 @@ class Algorithm:
 
             if  Algorithm.check_all_white_except_black(current_board):
                 return Algorithm._path_board(parent_map, current_logic_game)
-
-    def get_goal_for_square(self, square):
-        for sq in self.squares:
-            if sq.is_goal and sq.goal_color == square.color:
-                return sq
-        return None
+    
     def heuristic(self):
         manhat = 0
         for square in self.board.squares:
@@ -170,5 +165,52 @@ class Algorithm:
                 goal_square = self.board.get_goal_for_square(square)
                 if goal_square:
                     manhat += abs(square.x - goal_square.x) + abs(square.y - goal_square.y)
+        print(manhat)
         return manhat
     
+    @staticmethod
+    def a_star(start_logic_game):
+        class PriorityQueueItem:
+            def __init__(self, cost, heuristic, game_state):
+                self.cost = cost
+                self.heuristic = heuristic
+                self.total_cost = cost + heuristic  
+                self.game_state = game_state
+
+            def __lt__(self, other):
+                return self.total_cost < other.total_cost  
+
+        priority_queue = []
+        start_heuristic = Algorithm.heuristic(start_logic_game)  
+        heapq.heappush(priority_queue, PriorityQueueItem(0, start_heuristic, start_logic_game))
+
+        visited = set()
+        parent_map = {str(start_logic_game.board): None}
+
+        while priority_queue:
+            current_item = heapq.heappop(priority_queue)
+            current_cost = current_item.cost
+            current_logic_game = current_item.game_state
+
+            if Algorithm.check_all_white_except_black(current_logic_game.board):
+                print(f"A* visited nodes: {len(visited)}")
+                return Algorithm._path_board(parent_map, current_logic_game)
+
+            state_key = str(current_logic_game.board)
+            if state_key in visited:
+                continue
+            visited.add(state_key)
+
+            for move, next_board in current_logic_game.next_state():
+                next_logic_game = LogicGame(next_board)
+                next_state_key = str(next_board)
+                if next_state_key in visited:
+                    continue
+
+                move_cost = current_cost + 1  
+                heuristic = Algorithm.heuristic(next_logic_game) 
+                heapq.heappush(priority_queue, PriorityQueueItem(move_cost, heuristic, next_logic_game))
+                parent_map[next_state_key] = current_logic_game
+
+        print(f"A* visited nodes: {len(visited)}")
+        return None

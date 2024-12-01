@@ -40,7 +40,11 @@ class Board:
         if 0 <= x < self.width and 0 <= y < self.height:
             return self.net[y][x]
         return None
-
+    def get_goal_for_square(self, square):
+        for sq in self.squares:
+            if sq.is_goal and sq.goal_color == square.color:
+                return sq
+        return None
     def cpoy_board(self):
         new_squares = [copy.deepcopy(square) for square in self.squares]
         new_board = Board(self.width, self.height, new_squares)
