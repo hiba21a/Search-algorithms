@@ -51,15 +51,33 @@ class Board:
             tsquare = self.net[y][x]
             return tsquare.color == self.COLOR_WHITE or tsquare.moveable_on_it == True
         return False
-
+        
     def update_position(self, square, original_x, original_y, new_x, new_y):
-        new_square = Square(original_x, original_y, self.COLOR_WHITE, moveable_on_it=True)
-        self.net[original_y][original_x] = new_square
+        original_square = self.net[original_y][original_x]
+        if original_square.is_goal:  
+            self.net[original_y][original_x] = Square(
+                original_x, original_y, self.COLOR_WHITE, 
+                is_goal=True, 
+                goal_color=original_square.goal_color, 
+                moveable_on_it=True
+            )
+        else:
+            self.net[original_y][original_x] = Square(
+                original_x, original_y, self.COLOR_WHITE, moveable_on_it=True
+            )
+
+        target_square = self.net[new_y][new_x]
+        if target_square.is_goal:
+            square.is_goal = True
+            square.goal_color = target_square.goal_color
+        else:
+            square.is_goal = False
+            square.goal_color = None
 
         square.x, square.y = new_x, new_y
         self.net[new_y][new_x] = square
-        
-<<<<<<< HEAD
+
+
     def calculate_cost(self, other_board):
         cost = 0
         for square in self.squares:
@@ -67,10 +85,7 @@ class Board:
             if other_square:
                 cost += abs(square.x - other_square.x) + abs(square.y - other_square.y)
         return cost
-=======
-
->>>>>>> 360b2a9876bfc1649c2f2cca2bdc7e6951271daf
-
+    
     def __str__(self):
         result = ""
         for y in range(self.height):
@@ -87,8 +102,10 @@ class Board:
                             row += "G "
                         elif square.color == self.COLOR_BLUE:
                             row += "B "
-                        else:
+                        elif square.color == self.COLOR_RED:
                             row += "R "
+                        else:
+                            row += "- " 
                     elif square.is_goal:
                         if square.goal_color == self.COLOR_GREEN:
                             row += "g "

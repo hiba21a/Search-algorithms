@@ -158,4 +158,17 @@ class Algorithm:
             if  Algorithm.check_all_white_except_black(current_board):
                 return Algorithm._path_board(parent_map, current_logic_game)
 
-        
+    def get_goal_for_square(self, square):
+        for sq in self.squares:
+            if sq.is_goal and sq.goal_color == square.color:
+                return sq
+        return None
+    def heuristic(self):
+        manhat = 0
+        for square in self.board.squares:
+            if square.move and not square.rgoal:  
+                goal_square = self.board.get_goal_for_square(square)
+                if goal_square:
+                    manhat += abs(square.x - goal_square.x) + abs(square.y - goal_square.y)
+        return manhat
+    
